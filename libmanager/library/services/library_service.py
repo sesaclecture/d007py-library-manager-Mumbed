@@ -15,20 +15,32 @@ class LibraryService(BaseService):
 
     def __init__(self) -> None:
         # TODO: 내부 리스트 초기화
-        pass
+        self._books: List[Book] = []
 
     def add_book(self, book: Book) -> None:
         # TODO: 책 추가
-        raise NotImplementedError
+        self._books.append(book)
 
     def remove_book(self, title: str) -> None:
         # TODO: 제목으로 책 삭제 (없으면 ValueError)
-        raise NotImplementedError
+        remove_book = None
+        
+        for book in self._books:
+            if book.title == title:
+                remove_book = book
+                break
+        if remove_book:
+            self._books.remove(remove_book)
+        else:
+            raise ValueError
 
     def list_books(self) -> Iterable[Book]:
         # TODO: 책 목록 반환 (복사본 반환 권장)
-        raise NotImplementedError
+        return self._books.copy()
 
     def find_book(self, title: str) -> Book:
         # TODO: 제목으로 책 찾기 (없으면 ValueError)
-        raise NotImplementedError
+        for book in self._books:
+            if book.title == title:
+                return book
+        raise ValueError
